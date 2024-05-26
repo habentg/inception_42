@@ -1,0 +1,10 @@
+NGINX serves as a Reverse Proxy in this instance.
+PHP-FPM in our wordpress container is just a php script interpreter.
+
+Here is the work-flow:
+1. The web server receives a request for a PHP script.
+2. The web server forwards the request to PHP-FPM using the FastCGI protocol.
+3. PHP-FPM receives the request and assigns it to an available PHP process from its pool.
+4. The PHP process executes the script and returns the output to PHP-FPM.
+5. PHP-FPM sends the output back to the web server using the FastCGI protocol.
+6. The web server returns the output to the client (e.g., a web browser).

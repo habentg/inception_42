@@ -1,0 +1,63 @@
+
+services:
+    nginx:
+        container_name: nginx
+        image: nginx
+        build:
+            context: ./requirements/nginx/.
+            dockerfile: Dockerfile
+        restart: on-failure
+        ports:
+            - "443:443"
+        networks:
+            - inception
+        volumes:
+            - ./requirements/nginx/tools/certs/.:/etc/nginx/certs/.
+            - data_vol:/var/www/html/wordpress
+        command: ["nginx", "-g", "daemon off;", "-c", "/etc/nginx/nginx.conf"]
+        depends_on:
+            - wordpress
+        env_file: .env
+    wordpress:
+        container_name: wordpress
+        image: wordpress
+        build:
+            context: ./requirements/wordpress
+            dockerfile: Dockerfile
+        restart: on-failure
+        networks:
+            - inception
+        depends_on:
+            - mariadb
+        env_file: .env
+        volumes:
+            - data_vol:/var/www/html/wordpress
+    mariadb:
+        container_name: mariadb
+        image: mariadb
+        build:
+            context: ./requirements/mariadb
+            dockerfile: Dockerfile
+        restart: on-failure #restart the container only if it exits with a non-zero exit code,
+        networks:
+            - inception
+        # ports:
+        #     - "3306:3306"
+        env_file: .env
+        volumes:
+            - db_vol:/var/lib/mysql
+networks:
+    inception:
+        name: inception
+        driver: bridge
+volumes:
+    db_vol:
+        driver_opts:
+            type: none
+            o: bind
+            device: /home/${USER}/data/db_vol
+    data_vol:
+        driver_opts:
+            type: none
+            o: bind
+            device: /home/${USER}/data/data_vol
