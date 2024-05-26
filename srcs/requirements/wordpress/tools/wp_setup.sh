@@ -34,7 +34,7 @@ if [ ! -f $WP_CONFIG_FILE ]; then
     echo "created ADMIN user ......"
     
     wp user create --allow-root $WP_USR $WP_EMAIL --role=author --user_pass=$WP_PWD
-    wp user create --allow-root "student" "student@42.fr" --role=author --user_pass="s123"
+    # wp user create --allow-root "student" "student@42.fr" --role=author --user_pass="s123"
     if [ $? -ne 0 ]; then
         echo "Failure to create NORMAL user ......"
         return 1
