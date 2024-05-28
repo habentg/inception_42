@@ -12,7 +12,7 @@ services:
         networks:
             - inception
         volumes:
-            - ./requirements/nginx/tools/certs/.:/etc/nginx/certs/.
+            - ../secrets/.:/etc/nginx/certs/.
             - data_vol:/var/www/html/wordpress
         command: ["nginx", "-g", "daemon off;", "-c", "/etc/nginx/nginx.conf"]
         depends_on:
@@ -55,9 +55,9 @@ volumes:
         driver_opts:
             type: none
             o: bind
-            device: /home/${USER}/data/db_vol
+            device: ${DB_DIR}
     data_vol:
         driver_opts:
             type: none
             o: bind
-            device: /home/${USER}/data/data_vol
+            device: ${DATA_DIR}
