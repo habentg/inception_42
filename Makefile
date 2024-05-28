@@ -1,8 +1,6 @@
 COMPOSE 		= cd ./srcs/ && docker compose
-# DATA_DIR        = /home/${USER}/data/data_vol
-# DB_DIR          = /home/${USER}/data/db_vol
-DATA_DIR        = ./srcs/data_vol
-DB_DIR          = ./srcs/db_vol
+DATA_DIR        = /home/${USER}/data/data_vol
+DB_DIR          = /home/${USER}/data/db_vol
 
 # ----------------------- building services --------------------------
 up: keygen vols
@@ -38,7 +36,7 @@ re: down up # rebuilding the services without deleting the persistent storages
 
 
 # ----------------------- Deleting services and their resources --------------------------
-fclean: down rm-volume
+fclean: down
 	@yes | docker system prune --all
 	@docker volume rm $$(docker volume ls -q)
 	@cd /home/${USER}/data && sudo rm -rf *
