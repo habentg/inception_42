@@ -52,12 +52,4 @@ networks:
         driver: bridge
 volumes:
     db_vol:
-        driver_opts:
-            type: none
-            o: bind
-            device: ${DB_DIR}
     data_vol:
-        driver_opts:
-            type: none
-            o: bind
-            device: ${DATA_DIR}
