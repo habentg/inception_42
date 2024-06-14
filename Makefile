@@ -35,7 +35,7 @@ re: down up # rebuilding the services without deleting the persistent storages
 # ----------------------- Deleting services and their resources --------------------------
 fclean: down
 	@yes | docker system prune --all
-# @docker volume rm $$(docker volume ls -q)
+	@docker volume rm $$(docker volume ls -q)
 # @rm -rf ${DB_DIR} ${DATA_DIR}
 
 # ----------------------- rebuilding from scratch --------------------------
